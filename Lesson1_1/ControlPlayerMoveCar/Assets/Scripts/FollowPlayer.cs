@@ -5,7 +5,12 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     public GameObject player;
+    public GameObject cameraFirstPerson;
+    public GameObject mainCamera;
     private Vector3 offset = new Vector3(0, 4, -7);
+    private Vector3 offsetfirstcamera = new Vector3(0, 2, 2);
+    private bool iskeyPress = true;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +20,38 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position + offset; //new vector 3 = es el offset
+
+        if (iskeyPress)
+        {
+            mainCamera.SetActive(true);
+            cameraFirstPerson.SetActive(false); ////camera firsperson deshabilida
+            mainCamera.transform.position = player.transform.position + offset; //new vector 3 = es el offset
+            Debug.Log("camara principal");
+        }
+
+        if (Input.GetKey(KeyCode.F))
+            {
+            if (iskeyPress == true)
+            {
+                iskeyPress = false;
+            }
+            else
+            {
+                iskeyPress = true;
+            }
+                
+            }
+
+        if (!iskeyPress)
+        {
+            cameraFirstPerson.SetActive(true);
+            mainCamera.SetActive(false);//camera principal deshabilida
+            cameraFirstPerson.transform.position = player.transform.position + offsetfirstcamera;
+            
+            
+        }
+
+        
     }
 
     
